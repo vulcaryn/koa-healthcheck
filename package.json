@@ -1,13 +1,17 @@
 {
   "name": "koa-healthcheck",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A simple middleware to monitor an koa2 api.",
   "main": "index.js",
   "scripts": {
     "test": "nyc --reporter=lcov mocha --timeout 10000 ./tests/**/*.spec.js --exit"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vulcaryn/koa-healthcheck"
+  },
   "keywords": [
-    "koa2",
+    "koa",
     "ping",
     "healthcheck"
   ],
