@@ -2,7 +2,7 @@
 
 const Koa = require('koa');
 const router = require('koa-router')();
-const healthcheck = require('../index');
+const healthcheckPlugin = require('../index');
 
 const app = new Koa();
 const checks = [{
@@ -28,16 +28,15 @@ const checks = [{
     configuration: {
         url: 'http://my-awesome-site.io/another-url',
     },
-}]
+}];
 
-healthcheck.setup(checks, '1.6.3');
-router.get('/200', (ctx) => { ctx.status = 200; })
-router.get('/400', (ctx) => { ctx.status = 400; })
-router.get('/500', (ctx) => { ctx.status = 500; })
+healthcheckPlugin(app, checks, '1.6.3');
 
-app.use(healthcheck.metricsMiddleware);
+router.get('/200', (ctx) => { ctx.status = 200; });
+router.get('/400', (ctx) => { ctx.status = 400; });
+router.get('/500', (ctx) => { ctx.status = 500; });
+
 app.use(router.routes());
-app.use(healthcheck.routes);
 
 const server = app.listen(3456);
 
