@@ -1,6 +1,7 @@
 'use strict';
 
 const Koa = require('koa');
+const router = require('koa-router')();
 const healthcheck = require('../index');
 
 const app = new Koa();
@@ -30,7 +31,12 @@ const checks = [{
 }]
 
 healthcheck.setup(checks, '1.6.3');
+router.get('/200', (ctx) => { ctx.status = 200; })
+router.get('/400', (ctx) => { ctx.status = 400; })
+router.get('/500', (ctx) => { ctx.status = 500; })
 
+app.use(healthcheck.metricsMiddleware);
+app.use(router.routes());
 app.use(healthcheck.routes);
 
 const server = app.listen(3456);

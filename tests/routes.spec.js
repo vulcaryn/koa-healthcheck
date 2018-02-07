@@ -56,4 +56,24 @@ describe('Routes:', () => {
                 });
         });
     });
+
+    describe('Metrics', () => {
+        it('should return the number of request groupped by status', (done) => {
+            chai.request(server).get(`/200`).end();
+            chai.request(server).get(`/200`).end();
+            chai.request(server).get(`/400`).end();
+            chai.request(server).get(`/500`).end();
+            chai.request(server).get(`/metrics`)
+                .end((err, res) => {
+                    should.not.exist(err);
+                    res.status.should.eql(200);
+                    res.body.should.eql({
+                        Http2XX: 2,
+                        Http4XX: 1,
+                        Http5XX: 1,
+                    });
+                    done();
+                });
+        });
+    });
 });
