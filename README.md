@@ -16,8 +16,11 @@ const healthcheck = require('koa-healthcheck');
 // Just setup the middleware:
 healthcheck.setup(myConfiguration, versionOfMyApp);
 
+// Enable the metric monitoring to count requests
+koa.use(healthcheck.metricMiddleware);
+
 // Apply the middleware to koa:
-koa.use(healthcheck.routes())
+koa.use(healthcheck.routes());
 ```
 
 ## Features
@@ -53,6 +56,18 @@ Return the current version of your application based on the setup.
 GET http://my-api.com/version
 HTTP/1.1 200 OK
 "X.Y.Z"
+```
+
+### Metrics
+Return the amont of request returned with 2XX, 4XX and 5XX status.
+```
+GET http://my-api.com/metrics
+HTTP/1.1 200 OK
+{
+    "Http2XX": 2,
+    "Http4XX": 1,
+    "Http5XX": 1
+}
 ```
 
 ## Test it

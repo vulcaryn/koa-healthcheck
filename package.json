@@ -1,6 +1,6 @@
 {
   "name": "koa-healthcheck",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A simple middleware to monitor an koa2 api.",
   "main": "index.js",
   "scripts": {
