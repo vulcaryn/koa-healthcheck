@@ -1,14 +1,17 @@
 'use strict';
 
-const request = require('async-request');
+const request = require('request-promise-native');
 const state = require('./state');
 
 async function ping({ url }) {
-    if (!url) { return 1; }
-
-    const { statusCode, body } = await request(url);
-
-    if (statusCode === 200 && body === 'pong') {
+    if (!url) { return state.DOWN; }
+    
+    const result = await request(url).then((res) => {
+        return res === 'pong';
+    }).catch(() => {
+        return false;
+    });
+    if (result) {
         return state.UP;
     }
     return state.DOWN;

@@ -10,6 +10,7 @@ const checks = [{
     type: 'ping',
     configuration: {
         url: 'http://my-awesome-site.io/ping',
+        //url: 'http://localhost:3456/ping',
     },
 }, {
     name: 'sqlite',
