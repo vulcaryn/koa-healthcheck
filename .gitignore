@@ -3,3 +3,5 @@ coverage/
 node_modules/
 tests.sqlite
 .idea/
+package-lock.json
+.git

@@ -4,7 +4,7 @@ const router = require('koa-router')();
 const checks = require('./checks');
 const paths = ['/ping', '/version', '/healthcheck', '/metrics'];
 
-function healthcheckPlugin(app, checksConf, version) {
+function healthcheckPlugin(app, parameters) {
   const count = {
     Http2XX: 0,
     Http4XX: 0,
@@ -13,13 +13,13 @@ function healthcheckPlugin(app, checksConf, version) {
 
   async function healthcheck(ctx) {
     const result = {};
-    const promises = checksConf.map((check) => {
+    const promises = parameters.checks.map((check) => {
       return checks(check);
     });
 
     await Promise.all(promises)
       .then((data) => {
-        checksConf.map((check, index) => {
+        parameters.checks.map((check, index) => {
           result[check.name || `no-name-${index}`] = data[index];
         });
       });
@@ -43,11 +43,11 @@ function healthcheckPlugin(app, checksConf, version) {
     }
   }
 
-  router
-    .get('/ping', (ctx) => { ctx.body = 'pong'; })
-    .get('/version', (ctx) => { ctx.body = version; })
-    .get('/healthcheck', healthcheck)
-    .get('/metrics', (ctx) => { ctx.body = count; });
+  if (parameters.routes.healthcheck) router.get('/healthcheck', healthcheck);
+  if (parameters.routes.metrics) router.get('/metrics', (ctx) => { ctx.body = count; });
+  if (parameters.routes.ping) router.get('/ping', (ctx) => { ctx.body = 'pong'; })
+  if (parameters.routes.version) router.get('/version', (ctx) => { ctx.body = parameters.version; });
+
 
   app.use(metricsMiddleware);
   app.use(router.routes());
