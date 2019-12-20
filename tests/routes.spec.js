@@ -49,8 +49,7 @@ describe('Routes:', () => {
                     res.status.should.eql(200);
                     res.body.should.eql({
                         'awesome-site': 0,
-                        'sqlite': 0,
-                        'no-name-2': 1,
+                        'no-name-1': 1,
                     });
                     done();
                 });

@@ -3,10 +3,10 @@
 const Sequelize = require('sequelize');
 const state = require('./state');
 
-async function db({ database, username, password, options }) {
-    if (!database || !options || !options.dialect) { return state.DOWN; }
+async function db(dbConfig) {
+    if (!dbConfig.database || !dbConfig.options || !dbConfig.options.dialect) { return state.DOWN; }
 
-    const instance = new Sequelize(database, username, password, options);
+    const instance = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig.options);
 
     const result = await instance.authenticate()
         .then(() => state.UP)

@@ -1,7 +1,7 @@
 {
   "name": "koa-healthcheck",
   "version": "1.2.0",
-  "description": "A simple middleware to monitor an koa2 api.",
+  "description": "A simple middleware to monitor an koa2 API.",
   "main": "index.js",
   "scripts": {
     "test": "nyc --reporter=lcov mocha --timeout 10000 ./tests/**/*.spec.js --exit"
@@ -19,19 +19,16 @@
   "license": "ISC",
   "dependencies": {
     "koa-router": "7.4.0",
-    "mysql2": "1.6.5",
-    "pg": "7.11.0",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.7",
-    "sequelize": "5.8.6",
-    "sqlite3": "4.0.8"
+    "request-promise-native": "^1.0.8",
+    "sequelize": "5.21.3"
   },
   "devDependencies": {
     "chai": "4.2.0",
     "chai-http": "4.3.0",
-    "koa": "2.7.0",
-    "mocha": "6.1.4",
-    "nock": "10.0.6",
+    "koa": "2.11.0",
+    "mocha": "6.2.2",
+    "nock": "11.7.0",
     "nyc": "14.1.1"
   }
 }

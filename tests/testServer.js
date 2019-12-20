@@ -13,25 +13,23 @@ const checks = [{
         //url: 'http://localhost:3456/ping',
     },
 }, {
-    name: 'sqlite',
-    type: 'db',
-    configuration: {
-        database: 'my-db',
-        username: null,
-        password: null,
-        options: {
-            storage: './tests.sqlite',
-            dialect: 'sqlite'
-        },
-    },
-}, {
     type: 'ping',
     configuration: {
         url: 'http://my-awesome-site.io/another-url',
     },
 }];
 
-healthcheckPlugin(app, checks, '1.6.3');
+healthcheckPlugin(app, {
+    // Array of custom checks
+    "checks": checks,
+    "routes": {
+        "healthcheck": true,
+        "metrics": true,
+        "ping": true,
+        "version": true
+    },
+    "version": "1.6.3"
+});
 
 router.get('/200', (ctx) => { ctx.status = 200; });
 router.get('/400', (ctx) => { ctx.status = 400; });
